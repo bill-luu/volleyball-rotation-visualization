@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import '../public/style.scss'
+
 export default {
   name: 'Test',
   data() {
@@ -15,17 +17,14 @@ export default {
   },
   methods: {
       onClick() {
-        //   let ball = this.$refs.ball
-          // this.$refs.ball.style.transform = "translate(400px)"
           document.getElementById("ball").style.transform = "translate(400px)"
           console.log(this.$refs.ball.style)
       }
   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
 }
