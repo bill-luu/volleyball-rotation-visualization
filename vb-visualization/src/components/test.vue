@@ -1,27 +1,63 @@
 <template>
-  <div class="test">
+  <div class="test" @keyup="onSpacePress" tabindex=0>
       <div ref="ball" id="ball" @click="onClick"></div>
   </div>
 </template>
 
-<script>
-import '../public/style.scss'
+<script lang="ts">
 
-export default {
+import { defineComponent } from 'vue'
+import '../public/style.scss'
+import { I_Translation } from '../interfaces/I_Translation'
+import { I_Coordinate } from '../interfaces/I_Coordinate'
+
+interface I_Data {
+  changeFromOrigin: I_Coordinate,
+}
+
+export default defineComponent({
   name: 'Test',
-  data() {
+  data() : I_Data {
       return {
-          doMove: false,
-          origin: 0
+        changeFromOrigin: {
+          X: 0,
+          Y: 0,
+        }
       }
   },
   methods: {
+      onSpacePress() {
+        this.changeFromOrigin = {
+          X: 0,
+          Y: 0,
+        }
+
+        let player = document.getElementById("ball");
+        player!.style.transform = '';
+      },
+      calculateTransform(change: I_Coordinate) : I_Translation {
+        this.changeFromOrigin.X += change.X
+        this.changeFromOrigin.Y += change.Y
+
+        let ret: I_Translation = { 
+          translation: `translate(${this.changeFromOrigin.X}px,
+          ${this.changeFromOrigin.Y}px)`
+        }
+        return ret
+      },
       onClick() {
-          document.getElementById("ball").style.transform = "translate(400px)"
-          console.log(this.$refs.ball.style)
+          let change: I_Coordinate = {
+            X: 300,
+            Y: 100
+          };
+
+          let translate : I_Translation = this.calculateTransform(change);
+
+          let player = document.getElementById("ball");
+          player!.style.transform = translate.translation;
       }
   }
-}
+})
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">

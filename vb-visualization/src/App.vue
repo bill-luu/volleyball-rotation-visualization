@@ -2,19 +2,19 @@
   <Test/>
 </template>
 
-<script>
-// import HelloWorld from './components/HelloWorld.vue'
-import Test from './components/test.vue'
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import Test from './components/test.vue';
 
-export default {
-  name: 'App',
+@Options({
   components: {
-    Test
-  }
-}
+    Test,
+  },
+})
+export default class App extends Vue {}
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
