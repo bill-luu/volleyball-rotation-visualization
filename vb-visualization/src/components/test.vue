@@ -1,41 +1,44 @@
 <template>
-  <!-- <div class="test" @keyup.space="onSpacePress" @keyup.up="onUpPress" tabindex=0>
-      <div ref="ball" id="ball" class="ball" @click="onClick"></div>
-      
-      <div ref="ball" id="ref" class="ball"></div>
-  </div> -->
+  <span>{{plays[currentPlay].name + " " + index}}</span>
   <div class="court" @keyup.right="nextPlay" tabindex=0>
-    <div ref="ball" id="fpower" class="player frontrow">P</div>
-    <div ref="player" id="fmiddle" class="player frontrow">M</div>
-    <div ref="player" id="setter" class="player frontrow">S</div>
-    <div ref="player" id="right" class="player backrow">R</div>
-    <div ref="player" id="bmiddle" class="player backrow">M</div>
-    <div ref="player" id="bpower" class="player backrow">P</div>
+    <div ref="ball" id="O2" class="player frontrow">O2</div>
+    <div ref="player" id="M2" class="player frontrow">M2</div>
+    <div ref="player" id="S" class="player frontrow">S</div>
+    <div ref="player" id="R" class="player backrow">R</div>
+    <div ref="player" id="M1" class="player backrow">M1</div>
+    <div ref="player" id="O1" class="player backrow">O1</div>
   </div>
 </template>
 
 <script lang="ts">
 
-import { defineComponent } from 'vue'
-import '../public/style.scss'
-import { I_Translation } from '../interfaces/I_Translation'
-import { I_Coordinate } from '../interfaces/I_Coordinate'
-import { GAME_START_SERVE } from '../data/Plays'
 import { I_Play } from '@/interfaces/I_Play'
-
-// interface I_Data {
-//   changeFromOrigin: I_Coordinate,
-// }
+import { defineComponent } from 'vue'
+import { ROTATION_3_RECEIVE } from '../data/Plays'
+import { I_Coordinate } from '../interfaces/I_Coordinate'
+import { I_Translation } from '../interfaces/I_Translation'
+import '../public/style.scss'
 
 export default defineComponent({
   name: 'Test',
   data() {
     return {
       index: 0,
+      plays: [
+        // GAME_START_SERVE,
+        // GAME_START_RECEIVE,
+        // ROTATION_2_SERVE,
+        // ROTATION_2_RECEIVE,
+        // ROTATION_2_RECEIVE_ALT,
+        // ROTATION_3_SERVE,
+        ROTATION_3_RECEIVE,
+      ],
+      currentPlay: 0,
+      debugPostion: false,
     }
   },
   mounted() {
-    this.movePositions(GAME_START_SERVE, 0);
+    this.movePositions(this.plays[this.currentPlay], 0);
   },
   methods: {
       calculateTransform(change: I_Coordinate) : I_Translation {
@@ -53,7 +56,10 @@ export default defineComponent({
         return ret
       },
       movePlayer(distance: I_Coordinate, position: string) {
-          let translate : I_Translation = this.calculateTransform(distance);
+        let translate : I_Translation = this.calculateTransform(distance);
+        if(this.debugPostion) {
+          console.log(position, translate)
+        }
 
           let player = document.getElementById(position);
           player!.style.transform = translate.translation;
@@ -80,9 +86,13 @@ export default defineComponent({
         }
       },
       nextPlay() {
-        console.log(this.index++)
-        this.index %= GAME_START_SERVE.transitions.length
-        this.movePositions(GAME_START_SERVE, this.index);
+        this.index++
+        if(this.index === this.plays[this.currentPlay].transitions.length) {
+          this.index = 0
+          this.currentPlay++  
+        }
+        this.currentPlay %= this.plays.length
+        this.movePositions(this.plays[this.currentPlay], this.index);
       }
   }
 })
@@ -105,7 +115,7 @@ a {
 }
 
 .frontrow {
-    margin-top: -250px;
+    // margin-top: -250px;
 }
 .player {
   position: absolute;
@@ -115,13 +125,14 @@ a {
   transform: translateX(-50%);
 }
 .backrow {
-    margin-top: -125px;
+    // margin-top: -125px;
 }
 
 .court {
   width: 500px;
   height: 500px;
   margin: auto;
+  outline: 3px solid black;
 }
 
 .test {
