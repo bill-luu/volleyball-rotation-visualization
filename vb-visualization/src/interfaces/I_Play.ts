@@ -45,16 +45,6 @@ export class Play implements I_Play {
 
     private getBasePositions(): I_Position[] {
         const ret: I_Position[] = []
-        // Setter - always in the same place
-        // ret.push({
-        //   player: SETTER,
-        //   position: SETTER_BASE_POSITION,
-        // });
-
-        // ret.push({
-        //     player: RIGHT,
-        //     position: RIGHT_BASE_POSITION,
-        // });
 
         this.frontRow.forEach((player) => {
             if(!oppositeMap.has(player)) {

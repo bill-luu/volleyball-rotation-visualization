@@ -1,14 +1,14 @@
 <template>
-  <Test/>
+  <Court/>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Test from './components/test.vue';
+import Court from './components/court.vue';
 
 @Options({
   components: {
-    Test,
+    Court,
   },
 })
 export default class App extends Vue {}

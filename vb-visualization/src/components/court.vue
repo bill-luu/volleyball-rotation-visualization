@@ -20,7 +20,7 @@ import { I_Translation } from '../interfaces/I_Translation'
 import '../public/style.scss'
 
 export default defineComponent({
-  name: 'Test',
+  name: 'Court',
   data() {
     return {
       index: 0,
