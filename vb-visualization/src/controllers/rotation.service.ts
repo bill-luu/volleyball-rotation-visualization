@@ -4,6 +4,7 @@ import { I_Rotation } from "@/interfaces/I_Rotation";
 export interface I_RotationService {
   getCurrentPlay: () => I_Play;
   nextPlay: () => void;
+  rotation: I_Rotation
 }
 
 export class RotationService implements I_RotationService {
