@@ -12,9 +12,9 @@
 
 <script lang="ts">
 
+import { PLAYS } from '@/data/Plays'
 import { I_Play } from '@/interfaces/I_Play'
 import { defineComponent } from 'vue'
-import { ROTATION_3_RECEIVE } from '../data/Plays'
 import { I_Coordinate } from '../interfaces/I_Coordinate'
 import { I_Translation } from '../interfaces/I_Translation'
 import '../public/style.scss'
@@ -24,15 +24,7 @@ export default defineComponent({
   data() {
     return {
       index: 0,
-      plays: [
-        // GAME_START_SERVE,
-        // GAME_START_RECEIVE,
-        // ROTATION_2_SERVE,
-        // ROTATION_2_RECEIVE,
-        // ROTATION_2_RECEIVE_ALT,
-        // ROTATION_3_SERVE,
-        ROTATION_3_RECEIVE,
-      ],
+      plays: PLAYS,
       currentPlay: 0,
       debugPostion: false,
     }

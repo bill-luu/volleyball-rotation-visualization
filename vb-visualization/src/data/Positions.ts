@@ -1,4 +1,4 @@
-import { Coordinate, I_Coordinate } from "@/interfaces/I_Coordinate"
+import { Coordinate } from "@/interfaces/I_Coordinate";
 
 export const ATTACK_LINE: number = -250;
 
@@ -27,3 +27,14 @@ export const SETTER_BASE_POSITION: Coordinate = new Coordinate(166, -260)
 export const BPOWER_BASE_POSITION: Coordinate = new Coordinate(-166, -180)
 
 export const BMIDDLE_BASE_POSITION: Coordinate = POSITION_6
+
+export const RIGHT_ATTACK_POSITION: Coordinate = new Coordinate(286, -220);
+
+export const MIDDLE_ATTACK_POSITION: Coordinate = new Coordinate(0, -220);
+
+export const POWER_ATTACK_POSITION: Coordinate = new Coordinate(-296, -220);
+
+export const STACK_SLIGHTLY_LEFT: Coordinate = new Coordinate(-20, -210);
+
+export const STACK_SLIGHTLY_RIGHT: Coordinate = new Coordinate(50, -190);
+

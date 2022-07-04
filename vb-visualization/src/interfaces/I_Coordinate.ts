@@ -13,7 +13,6 @@ export class Coordinate implements I_Coordinate {
     }
 
     add(other: I_Coordinate): I_Coordinate {
-
         return {
           X: this.X + other.X,
           Y: this.Y + other.Y,
