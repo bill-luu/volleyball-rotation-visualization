@@ -27,10 +27,10 @@ export default defineComponent({
     let rotationList = new RotationList(ROTATIONS)
     return {
       index: 0,
-      currentPlay: 0,
       debugPostion: false,
       rotations: rotationList,
-      currentRotation: 0,
+      currentRotation: rotationList.getRotationService(0),
+      rotationIndex: 0,
     }
   },
   mounted() {
@@ -38,53 +38,44 @@ export default defineComponent({
     this.movePositions(play, 0);
   },
   methods: {
-    incrementPlay() : void {
-      this.rotations.getRotationService(this.currentRotation).nextPlay()
+    incrementPlay(): void {
+      this.currentRotation.nextPlay()
     },
     getCurrentPlay(): I_Play {
-      return this.rotations.getRotationService(this.currentRotation).getCurrentPlay()
+      return this.currentRotation.getCurrentPlay()
     },
     getRotation(): I_Rotation {
-      return this.rotations.getRotationService(this.currentRotation).rotation
+      return this.currentRotation.rotation
     },
-    calculateTransform(change: I_Coordinate): I_Translation {
-      let changeFromOrigin: I_Coordinate = {
-        X: 0,
-        Y: 0
-      }
-      changeFromOrigin.X += change.X
-      changeFromOrigin.Y += change.Y
-
-      let ret: I_Translation = {
-        translation: `translate(${changeFromOrigin.X}px,
-          ${changeFromOrigin.Y}px)`
+    calculateTransform(changeFromOrigin: I_Coordinate): I_Translation {
+      const ret: I_Translation = {
+        translation: `translate(${changeFromOrigin.X}px, ${changeFromOrigin.Y}px)`
       }
       return ret
     },
     movePlayer(distance: I_Coordinate, position: string) {
-      let translate: I_Translation = this.calculateTransform(distance);
+      const translate: I_Translation = this.calculateTransform(distance);
       if (this.debugPostion) {
         console.log(position, translate)
       }
 
       let player = document.getElementById(position);
-      player!.style.transform = translate.translation;
+      if(player) {
+        player.style.transform = translate.translation;
+      }
     },
     calculateSpaceBetweenBalls(
       origin: HTMLElement,
       dest: HTMLElement
     ): I_Coordinate {
-      let originRect = origin.getBoundingClientRect();
-      let destRect = dest.getBoundingClientRect();
-      let distanceVector: I_Coordinate = {
-        X: 0,
-        Y: 0
-      };
-      distanceVector = {
+      const originRect = origin.getBoundingClientRect();
+      const destRect = dest.getBoundingClientRect();
+
+      const ret: I_Coordinate = {
         X: originRect.left - destRect.left,
         Y: originRect.top - destRect.top,
       }
-      return distanceVector;
+      return ret;
     },
     movePositions(play: I_Play, transition: number) {
       for (let move of play.transitions[transition]) {
@@ -94,7 +85,7 @@ export default defineComponent({
     next() {
       this.index++
 
-      if(this.index === this.getCurrentPlay().transitions.length) {
+      if (this.index === this.getCurrentPlay().transitions.length) {
         this.index = 0
         this.incrementPlay()
       }
