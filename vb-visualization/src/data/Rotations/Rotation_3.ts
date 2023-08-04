@@ -7,13 +7,13 @@ import {
 } from "../TeamPositions/Rotation_3";
 
 const ROTATION_3_SERVE: Play = new Play(
-  "Rotation 3 - Serve",
+  "Rotation 3 - M2 Serve",
   [M1, O2, RIGHT],
   ROTATION_3_SERVE_POSITIONS
 );
 
 const ROTATION_3_RECEIVE: Play = new Play(
-  "Rotation 3 - Receive",
+  "Rotation 3 Receive - O2 pulls back while setter pushes middle",
   [M1, O2, RIGHT],
   ROTATION_3_RECEIVE_POSITIONS
 );

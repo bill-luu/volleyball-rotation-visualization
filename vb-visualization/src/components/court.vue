@@ -1,6 +1,6 @@
 <template>
-  <span>{{ getRotation().name + " " + getCurrentPlay().name + " " + index }}</span>
-  <div class="court" @keyup.right="next" tabindex=0>
+  <span>{{ getCurrentPlay().name }}</span>
+  <div class="court" @keyup.right="next" @keyup.left="prev" tabindex=0>
     <div ref="ball" id="O2" class="player frontrow">O2</div>
     <div ref="player" id="M2" class="player frontrow">M2</div>
     <div ref="player" id="S" class="player frontrow">S</div>
@@ -15,37 +15,30 @@
 import { RotationList } from '@/controllers/rotationList.service'
 import { I_Rotation } from '@/interfaces/I_Rotation'
 import { defineComponent } from 'vue'
-import { ROTATIONS } from '../data/Rotations'
 import { I_Coordinate } from '../interfaces/I_Coordinate'
-import { I_Play } from '../interfaces/I_Play'
+import { I_Play, I_Position } from '../interfaces/I_Play'
 import { I_Translation } from '../interfaces/I_Translation'
 import '../public/style.scss'
+import { ROTATIONS } from '@/data/Rotations'
 
 export default defineComponent({
   name: 'Court',
   data() {
     let rotationList = new RotationList(ROTATIONS)
     return {
-      index: 0,
       debugPostion: false,
       rotations: rotationList,
-      currentRotation: rotationList.getRotationService(0),
-      rotationIndex: 0,
     }
   },
   mounted() {
-    let play = this.getCurrentPlay()
-    this.movePositions(play, 0);
+    this.movePositions(this.getCurrentPlay().transitions[0]);
   },
   methods: {
-    incrementPlay(): void {
-      this.currentRotation.nextPlay()
-    },
     getCurrentPlay(): I_Play {
-      return this.currentRotation.getCurrentPlay()
+      return this.rotations.currentRotation().getCurrentPlay()
     },
     getRotation(): I_Rotation {
-      return this.currentRotation.rotation
+      return this.rotations.currentRotation().rotation
     },
     calculateTransform(changeFromOrigin: I_Coordinate): I_Translation {
       const ret: I_Translation = {
@@ -77,19 +70,16 @@ export default defineComponent({
       }
       return ret;
     },
-    movePositions(play: I_Play, transition: number) {
-      for (let move of play.transitions[transition]) {
+    movePositions(pos: I_Position[]) {
+      for (let move of pos) {
         this.movePlayer(move.position, move.player)
       }
     },
     next() {
-      this.index++
-
-      if (this.index === this.getCurrentPlay().transitions.length) {
-        this.index = 0
-        this.incrementPlay()
-      }
-      this.movePositions(this.getCurrentPlay(), this.index);
+      this.movePositions(this.rotations.nextPosition())
+    },
+    prev() {
+      this.movePositions(this.rotations.prevPosition())
     }
   }
 })

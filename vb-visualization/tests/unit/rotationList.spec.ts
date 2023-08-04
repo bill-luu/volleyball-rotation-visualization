@@ -10,9 +10,9 @@ describe("rotationsList.service.ts", () => {
 
   describe("getRotation", () => {
     it("Should get the rotation service at the index", () => {
-      expect(rotationList.getRotationService(0).rotation.name).toEqual("Rotation 1");
+      expect(rotationList.getRotation(0).rotation.name).toEqual("Rotation 1");
 
-      expect(rotationList.getRotationService(1).rotation.name).toEqual("Rotation 2");
+      expect(rotationList.getRotation(1).rotation.name).toEqual("Rotation 2");
     });
   });
 });
