@@ -1,6 +1,6 @@
 import { I_Position } from "@/interfaces/I_Play";
 import { M2, O1, SETTER, M1, O2, RIGHT } from "../PlayerRoles";
-import { SERVING_POSITION, POSITION_6, FMIDDLE_BASE_POSITION, POSITION_2, POSITION_1, POSITION_3, POSITION_4, POSITION_5, MIDDLE_ATTACK_POSITION, POWER_ATTACK_POSITION, RIGHT_ATTACK_POSITION } from "../Positions";
+import { SERVING_POSITION, POSITION_6, FMIDDLE_BASE_POSITION, POSITION_2, POSITION_1, POSITION_3, POSITION_4, POSITION_5, MIDDLE_ATTACK_POSITION, POWER_ATTACK_POSITION, RIGHT_ATTACK_POSITION, FPOWER_BASE_POSITION } from "../Positions";
 
 export const ROTATION_3_SERVE_POSITIONS: I_Position[][] = [
   [
@@ -82,6 +82,35 @@ export const ROTATION_3_RECEIVE_POSITIONS: I_Position[][] = [
     {
       player: RIGHT,
       position: RIGHT_ATTACK_POSITION,
+    },
+  ],
+];
+
+export const ROTATION_3_RECEIVE_ALT_POSITIONS: I_Position[][] = [
+  [
+    {
+      player: M2,
+      position: POSITION_6,
+    },
+    {
+      player: O1,
+      position: POSITION_5,
+    },
+    {
+      player: SETTER,
+      position: POSITION_4.add({X:50, Y:0}),
+    },
+    {
+      player: M1,
+      position: FPOWER_BASE_POSITION.add({X:0, Y:-50}),
+    },
+    {
+      player: O2,
+      position: FPOWER_BASE_POSITION,
+    },
+    {
+      player: RIGHT,
+      position: POSITION_1,
     },
   ],
 ];
